@@ -1,27 +1,21 @@
-import axios from 'axios';
+import { Notify } from 'notiflix/';
 import './sass/main.scss';
+
+import FetchCards from './fetchCards';
 
 const refs = {
   searchForm: document.querySelector('.search-form'),
   gallery: document.querySelector('.gallery'),
 };
 
-const BASE_URL = 'https://pixabay.com/api/';
-const API_KEY = '27044661-5039fd8f86a9259a09df45cad';
-
-async function fetchCards(searchQuery) {
-  const res = await axios.get(
-    `${BASE_URL}?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true`,
-  );
-  return res.data;
-}
+const fetchCards = new FetchCards();
 
 function handleSearch(e) {
   e.preventDefault();
 
-  const query = refs.searchForm.elements.searchQuery.value.trim();
+  fetchCards.query = refs.searchForm.elements.searchQuery.value.trim();
 
-  fetchCards(query).then(renderMarkup);
+  fetchCards(searchQuery).then(renderMarkup);
 }
 
 function renderMarkup({ hits }) {
