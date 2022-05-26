@@ -1,19 +1,19 @@
 import { Notify } from 'notiflix/';
 import './sass/main.scss';
 
-import FetchCards from './fetchCards';
+import CardsApiSerice from './fetchCards';
 
 const refs = {
   searchForm: document.querySelector('.search-form'),
   gallery: document.querySelector('.gallery'),
 };
 
-const fetchCards = new FetchCards();
+const cardsApiSerice = new CardsApiSerice();
 
 function handleSearch(e) {
   e.preventDefault();
 
-  fetchCards.query = refs.searchForm.elements.searchQuery.value.trim();
+  cardsApiSerice.query = refs.searchForm.elements.searchQuery.value.trim();
 
   fetchCards(searchQuery).then(renderMarkup);
 }

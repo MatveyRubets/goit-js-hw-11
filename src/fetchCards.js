@@ -5,7 +5,7 @@ const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '27044661-5039fd8f86a9259a09df45cad';
 const options = 'image_type=photo&orientation=horizontal&safesearch=true';
 
-class FetchRequest {
+export default class CardsApiSerice {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
