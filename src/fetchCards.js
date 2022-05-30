@@ -16,7 +16,12 @@ export default class CardsApiSerice {
       const res = await axios.get(
         `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&${options}&per_page=40&page=${this.page}`,
       );
-      // console.log(res.data);
+      if (res.data.total === 0) {
+        return Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.',
+        );
+      }
+
       return res.data;
     } catch (error) {
       Notify.failure(error);

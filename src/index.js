@@ -16,8 +16,14 @@ function handleSearch(e) {
 
   clearGallery();
   cardsApiSerice.query = refs.searchForm.elements.searchQuery.value.trim();
+
+  if (cardsApiSerice.query === '') {
+    return Notify.failure('Please input a valid query');
+  }
+
   cardsApiSerice.resetPage();
   cardsApiSerice.fetchCards().then(appendGallery);
+  refs.loadMoreBtn.classList.remove('hidden');
 }
 
 function onLoadMore() {
