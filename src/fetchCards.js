@@ -16,7 +16,7 @@ export default class CardsApiSerice {
       const res = await axios.get(
         `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&${options}&per_page=40&page=${this.page}`,
       );
-
+      // console.log(res.data);
       return res.data;
     } catch (error) {
       Notify.failure(error);

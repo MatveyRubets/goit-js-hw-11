@@ -6,6 +6,7 @@ import CardsApiSerice from './fetchCards';
 const refs = {
   searchForm: document.querySelector('.search-form'),
   gallery: document.querySelector('.gallery'),
+  loadMoreBtn: document.querySelector('[data-action="load-more"]'),
 };
 
 const cardsApiSerice = new CardsApiSerice();
@@ -13,12 +14,18 @@ const cardsApiSerice = new CardsApiSerice();
 function handleSearch(e) {
   e.preventDefault();
 
+  clearGallery();
   cardsApiSerice.query = refs.searchForm.elements.searchQuery.value.trim();
-
-  fetchCards(searchQuery).then(renderMarkup);
+  cardsApiSerice.resetPage();
+  cardsApiSerice.fetchCards().then(appendGallery);
 }
 
-function renderMarkup({ hits }) {
+function onLoadMore() {
+  cardsApiSerice.incrementPage();
+  cardsApiSerice.fetchCards().then(appendGallery);
+}
+
+function appendGallery({ hits }) {
   const markup = hits
     .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
       return `
@@ -50,4 +57,9 @@ function renderMarkup({ hits }) {
   refs.gallery.insertAdjacentHTML('beforeend', markup);
 }
 
+function clearGallery() {
+  refs.gallery.innerHTML = '';
+}
+
+refs.loadMoreBtn.addEventListener('click', onLoadMore);
 refs.searchForm.addEventListener('submit', handleSearch);
